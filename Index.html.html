@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pit Stop Facts – Car Trivia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E6E8EB;--card:#FFFFFF;--ink:#1B1D21;--mute:#5B606A;--line:#C9CDD3;--yellow:#F2C230;--red:#D62E33;--ok:#1E8E4E;
+--h:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;--b:'Barlow',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B1D21;--card:#2A2D33;--ink:#F1F1EE;--mute:#A4A9B3;--line:#41454D;--ok:#4CC37F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1B1D21;--card:#2A2D33;--ink:#F1F1EE;--mute:#A4A9B3;--line:#41454D;--ok:#4CC37F;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--b)}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--h);margin:0;line-height:1;letter-spacing:.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.hero{padding:56px 0 40px}
+.brand{font:600 15px var(--b);color:var(--mute);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.brand button{background:none;border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:14px}
+.stripe{height:6px;background:repeating-linear-gradient(90deg,var(--yellow) 0 36px,transparent 36px 60px);margin-bottom:28px}
+.hero h1{font-size:clamp(44px,9vw,92px);font-weight:900;text-transform:uppercase;max-width:14ch}
+.hero p{color:var(--mute);max-width:46ch;margin:16px 0 0}
+.fact-box{margin-top:32px;background:var(--ink);color:var(--bg);border-radius:6px;padding:26px 24px;border-left:10px solid var(--yellow)}
+:root:not([data-theme="light"]) .fact-box{--x:1}
+.fact-box .big{font:900 clamp(34px,6vw,56px)/1 var(--h);color:var(--yellow);margin-bottom:8px}
+.fact-box p{margin:0;color:inherit;max-width:60ch}
+.scene{margin-top:32px;border-radius:6px;overflow:hidden;border-bottom:8px solid var(--yellow)}
+.scene svg,.scene video{display:block;width:100%;height:auto;background:#14161B}
+.scene iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+.slow{animation:slide 18s linear infinite}
+.mid{animation:slide 2.6s linear infinite}
+.dash{animation:dash .3s linear infinite}
+.bob{animation:bob .45s ease-in-out infinite}
+.spin{animation:rot .35s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes slide{to{transform:translateX(-800px)}}
+@keyframes dash{to{transform:translateX(-100px)}}
+@keyframes bob{50%{transform:translateY(-2px)}}
+@keyframes rot{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.slow,.mid,.dash,.bob,.spin{animation:none}}
+.btn{background:var(--yellow);color:#1B1D21;border:0;border-radius:4px;padding:12px 22px;font:700 20px var(--h);letter-spacing:.03em;margin-top:18px}
+.btn:hover{background:#ffd54a}
+.btn.ghost{background:transparent;color:inherit;border:2px solid currentColor}
+nav.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px;margin-top:8px}
+nav.tabs button{white-space:nowrap;background:var(--card);border:2px solid var(--line);border-radius:30px;padding:8px 18px;font-weight:600}
+nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sec-title{font-size:38px;margin:30px 0 6px;font-weight:900;text-transform:uppercase}
+.hint{color:var(--mute);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.flip{perspective:900px;background:none;border:0;padding:0;height:260px;text-align:left}
+.inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.open .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;overflow:auto}
+.front{background:var(--card);border:2px solid var(--line)}
+.front h3{font-size:30px;font-weight:700}
+.front small{color:var(--mute);font-weight:600}
+.back{background:var(--yellow);color:#1B1D21;transform:rotateY(180deg);border:2px solid var(--yellow);font-size:16px;justify-content:center}
+.single{max-width:560px}
+.single .flip{width:100%;height:300px}
+.single .front h3{font-size:46px}
+.single .back{font-size:18px}
+.tag{display:inline-block;font-weight:600;font-size:14px;color:var(--red)}
+.cotd{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;background:var(--card);border:2px solid var(--line);border-top:8px solid var(--yellow);border-radius:6px;padding:22px;margin:8px 0 8px}
+.cotd svg{width:100%;height:auto;display:block}
+.cotd .yr{font:700 18px var(--h);color:var(--red)}
+.cotd h3{font-size:clamp(34px,5vw,52px);font-weight:900;text-transform:uppercase;margin:4px 0 10px}
+.cotd p{margin:0 0 6px}
+.spec{color:var(--mute);font-size:15px}
+@media (max-width:720px){.cotd{grid-template-columns:1fr}}
+.quiz{background:var(--card);border:2px solid var(--line);border-radius:6px;padding:26px 22px;margin:8px 0 64px}
+.qtop{display:flex;justify-content:space-between;font-weight:600;color:var(--mute);margin-bottom:12px}
+.quiz h3{font-size:34px;font-weight:700;margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:4px;padding:12px 14px;font-weight:500}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.opt.bad{border-color:var(--red);background:color-mix(in srgb,var(--red) 16%,transparent)}
+.why{min-height:3em;margin:14px 0 0;color:var(--mute)}
+.result{font:900 56px var(--h);color:var(--red)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--mute);font-size:14px}
+@media (prefers-reduced-motion:reduce){.inner{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Pit Stop Facts</span><button id="theme" aria-label="Switch light or dark theme">Light / Dark</button></div>
+  <div class="stripe"></div>
+  <h1>Car facts worth stopping for</h1>
+  <p>No engineering degree needed. Tap a fact, flip a card, then test yourself.</p>
+  <div class="scene">
+  <iframe id="hero"
+  src="https://www.youtube-nocookie.com/embed/DZAdVY9kKbc?autoplay=1&mute=1&loop=1&playlist=DZAdVY9kKbc&controls=1&rel=0&playsinline=1"
+  title="Porsche 911 GT3 driving"
+  allow="autoplay; encrypted-media; picture-in-picture"
+  allowfullscreen loading="lazy"></iframe>
+  <svg id="herofb" style="display:none" role="img" aria-label="A teal Porsche 911 driving along a road at dusk" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E3A59"/><stop offset="1" stop-color="#F2A65A"/></linearGradient>
+      <path id="hill" d="M0 200 Q100 140 200 190 T400 185 T600 175 T800 200 V240 H0Z"/>
+      <g id="poles"><rect x="100" y="150" width="6" height="84"/><rect x="300" y="150" width="6" height="84"/><rect x="500" y="150" width="6" height="84"/><rect x="700" y="150" width="6" height="84"/></g>
+      <g id="wh"><circle r="25" fill="#1B1D21"/><g class="spin"><circle r="13" fill="#C9CDD3" stroke="#5B606A" stroke-width="2"/><path d="M0 -12V12M-12 0H12M-8.5 -8.5L8.5 8.5M-8.5 8.5L8.5 -8.5" stroke="#5B606A" stroke-width="2"/></g></g>
+    </defs>
+    <rect width="800" height="300" fill="url(#sky)"/>
+    <circle cx="620" cy="150" r="44" fill="#F2C230"/>
+    <g class="slow" fill="#3B3F5C"><use href="#hill"/><use href="#hill" x="800"/></g>
+    <g class="mid" fill="#14161B" opacity=".85"><use href="#poles"/><use href="#poles" x="800"/></g>
+    <rect y="232" width="800" height="68" fill="#1F2127"/>
+    <rect y="228" width="800" height="5" fill="#F1F1EE" opacity=".7"/>
+    <g class="dash"><line x1="0" y1="284" x2="1700" y2="284" stroke="#F2C230" stroke-width="5" stroke-dasharray="55 45"/></g>
+    <ellipse cx="400" cy="274" rx="190" ry="7" fill="#000" opacity=".35"/>
+    <g transform="translate(200 134)"><g class="bob">
+      <path d="M24 116 L26 92 L70 76 L120 56 L200 50 L250 62 L320 84 L376 92 L378 116 Z" fill="#2F7F8F" stroke="#0E1014" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M130 62 L198 56 L240 67 L258 80 L122 80 Z" fill="#BFE3F0" stroke="#0E1014" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="358" y="94" width="16" height="7" rx="3" fill="#FFF3B0"/>
+      <rect x="24" y="98" width="10" height="6" rx="2" fill="#D62E33"/>
+      <use href="#wh" x="100" y="114"/><use href="#wh" x="305" y="114"/>
+    </g></g>
+  </svg>
+  </div>
+</header>
+
+<main>
+  <h2 class="sec-title">Mystery fact</h2>
+  <p class="hint">Tap the card to flip it. Hit shuffle for a surprise: you never know what comes next.</p>
+  <div class="single" id="grid" aria-live="polite"></div>
+  <button class="btn" id="shuffle">Shuffle fact</button>
+
+  <h2 class="sec-title">Car of the day</h2>
+  <p class="hint">A new car every day. Or pick your own.</p>
+  <article class="cotd" aria-live="polite">
+    <div id="cimg" role="img"></div>
+    <div>
+      <div class="yr" id="cyr"></div>
+      <h3 id="cname"></h3>
+      <p id="cfact"></p>
+      <p class="spec" id="cspec"></p>
+      <button class="btn" id="cnext">Show another car</button>
+    </div>
+  </article>
+
+  <h2 class="sec-title">Test yourself</h2>
+  <p class="hint">Six questions, all answered somewhere above.</p>
+  <section class="quiz" id="quiz"></section>
+</main>
+<footer>Made for curious drivers and passengers alike. Figures are rounded and can vary by source.</footer>
+</div>
+
+<script>
+const FACTS = {
+  History: [
+    {k:"1913",t:"First moving assembly line",d:"Ford introduced the moving assembly line for the Model T at Highland Park, Michigan. Build time per car fell from about 12 hours to roughly 93 minutes."},
+    {k:"1886",t:"The first car patent",d:"Karl Benz patented the Benz Patent-Motorwagen, widely seen as the first true automobile: three wheels and a single-cylinder engine."},
+    {k:"106 km",t:"The first road trip",d:"In 1888 Bertha Benz drove the Motorwagen about 106 km without telling her husband. She cleaned a fuel line with a hat pin and used her garter as insulation."},
+    {k:"1900",t:"Electric came first",d:"Electric cars are not new. Ferdinand Porsche built the electric Lohner-Porsche in 1900, and early EVs competed with petrol cars."},
+    {k:"1769",t:"The steam-powered ancestor",d:"Nicolas-Joseph Cugnot built a steam-powered tractor to haul cannons in 1769. Many historians call it the first self-propelled road vehicle."},
+    {k:"1896",t:"First speeding ticket",d:"Walter Arnold was fined in Kent, England, for doing 8 mph in a 2 mph zone."},
+    {k:"1903",t:"Windshield wipers",d:"Mary Anderson patented the first windshield wiper in 1903 after watching a tram driver struggle in the rain."},
+    {k:"1983",t:"Maruti 800 hits India",d:"The Maruti 800 launched in India in 1983 and put the middle class behind the wheel. It stayed in production for about three decades."}
+  ],
+  Records: [
+    {k:"50M+",t:"Best-selling nameplate",d:"The Toyota Corolla has sold over 50 million units since 1966, making it the best-selling car name in history."},
+    {k:"15M+",t:"Model T numbers",d:"Ford built more than 15 million Model Ts between 1908 and 1927, a record that stood for decades."},
+    {k:"304.77 mph",t:"Fastest official run",d:"In 2019 a Bugatti Chiron prototype hit 304.77 mph (490.48 km/h), the first production-based car past 300 mph."},
+    {k:"€135M",t:"Priciest auction sale",d:"A 1955 Mercedes-Benz 300 SLR Uhlenhaut Coupé sold for €135 million in 2022, the most ever paid for a car at auction."},
+    {k:"11M",t:"Toyota's big year",d:"The Toyota group sold about 11 million vehicles in 2023, the most of any carmaker in the world."},
+    {k:"21M+",t:"The Beetle's run",d:"More than 21 million Volkswagen Beetles were built between 1938 and 2003."},
+    {k:"1.37 m",t:"Smallest production car",d:"The Peel P50 of the 1960s was only about 1.37 metres long and had room for one person and a shopping bag."},
+    {k:"3M miles",t:"One owner, one Volvo",d:"Irv Gordon drove his 1966 Volvo P1800 over 3 million miles, a record for a single owner."}
+  ],
+  Brands: [
+    {k:"Tractors",t:"Lamborghini's first products",d:"Ferruccio Lamborghini made tractors first. The sports cars started after a dispute over a clutch in his Ferrari, according to the famous story."},
+    {k:"Baracca",t:"Ferrari's prancing horse",d:"The horse comes from the plane of WWI Italian fighter ace Francesco Baracca. His parents gave Enzo Ferrari permission to use it."},
+    {k:"4 rings",t:"What Audi's logo means",d:"The four rings represent four companies that merged in 1932 to form Auto Union: Audi, DKW, Horch and Wanderer."},
+    {k:"1937",t:"Why Toyoda became Toyota",d:"The founding family name was Toyoda. It was changed in 1937 partly because the new name takes eight strokes to write in Japanese, a lucky number."},
+    {k:"Mercedes",t:"A name from a daughter",d:"The Mercedes name came from Mercedes Jellinek, the daughter of Emil Jellinek, who sold and raced early Daimler cars."},
+    {k:"Pleiades",t:"Subaru's logo",d:"Subaru is the Japanese name for the Pleiades star cluster, and the logo's stars represent it."},
+    {k:"1947",t:"Mahindra and the Jeep",d:"Mahindra began as a steel trading company in 1945 and started assembling Willys Jeeps in India in 1947."},
+    {k:"1 lakh",t:"Tata Nano",d:"Launched in 2008, the Tata Nano was marketed as the world's cheapest car, with a target price of 1 lakh rupees."}
+  ],
+  Tech: [
+    {k:"1959",t:"The three-point seatbelt",d:"Volvo engineer Nils Bohlin invented it in 1959, and Volvo gave the patent away for free to save lives."},
+    {k:"<2 sec",t:"0 to 60 mph",d:"Rimac's electric Nevera has recorded a 0-60 mph time under two seconds, quicker than most supercars with engines."},
+    {k:"1981",t:"First airbag option",d:"Mercedes-Benz offered the first airbag in a production car on the 1981 S-Class, alongside seatbelt pretensioners."},
+    {k:"1997",t:"The Prius arrives",d:"The Toyota Prius launched in Japan in 1997 as the first mass-produced hybrid car."},
+    {k:"30,000",t:"Parts in a car",d:"A typical modern car has around 30,000 parts, counting every screw and clip."}
+  ],
+  Speed: [
+    {k:"Upside down",t:"F1 downforce",d:"At high speed an F1 car makes enough downforce that, in theory, it could drive upside down on a tunnel ceiling. Estimates usually put that speed well above 100 mph."},
+    {k:"45,000 L",t:"A thirsty Veyron",d:"At its 253 mph top speed, the Bugatti Veyron reportedly takes in over 45,000 litres of air a minute, about what a person breathes in four days."},
+    {k:"100–110°C",t:"F1 tires run hot",d:"F1 tires work best at around 100–110°C (212–230°F), hot enough to boil water."},
+    {k:"1,000°C+",t:"Glowing brakes",d:"Heavy braking can heat an F1 car’s carbon brake discs to over 1,000°C (1,832°F), enough to make them glow orange."}
+  ],
+  "Big Numbers": [
+    {k:"1.47B",t:"Vehicles on Earth",d:"There are roughly 1.47 billion cars and other road vehicles worldwide, about one for every five or six people."},
+    {k:"100 km",t:"Longest traffic jam",d:"In August 2010 a jam on the highway near Beijing stretched about 100 km (60 miles) and lasted around 12 days."},
+    {k:"162,000 mi",t:"Road to the Moon",d:"The average American car is driven about 13,500 miles a year. Over 12 years that is roughly 162,000 miles, nearly two-thirds of the way to the Moon."},
+    {k:"100M lines",t:"Code on wheels",d:"A modern luxury car can run on around 100 million lines of code, far more than a Boeing 787 Dreamliner’s onboard software."}
+  ],
+  Physics: [
+    {k:"12–30%",t:"Where the fuel goes",d:"Only about 12–30% of the energy in petrol reaches the wheels of a typical gas car. Most of the rest is lost as heat and friction."},
+    {k:"Millions of tons",t:"Tires shed dust",d:"As tires wear down, the world’s vehicles shed millions of tons of tiny rubber particles into the environment every year."},
+    {k:"10 sec",t:"Idling costs fuel",d:"Idling for more than about 10 seconds burns more fuel than switching the engine off and restarting it."},
+    {k:"120 bpm",t:"Fast music, fast driving",d:"In simulator studies, drivers listening to fast music (over about 120 beats per minute) tended to drive faster and commit more violations."}
+  ]
+};
+const QUIZ = [
+  {q:"Which car was first built on a moving assembly line?",o:["Ford Model T","Volkswagen Beetle","Chevrolet Corvette","Mini"],a:0,w:"Ford's Model T, from 1913."},
+  {q:"Which name is the best-selling car nameplate ever?",o:["Honda Civic","Toyota Corolla","Ford F-Series","VW Golf"],a:1,w:"The Corolla has passed 50 million sales."},
+  {q:"What did Lamborghini build before sports cars?",o:["Motorbikes","Boats","Tractors","Aircraft engines"],a:2,w:"Ferruccio Lamborghini started with tractors."},
+  {q:"Who invented the three-point seatbelt?",o:["Henry Ford","Nils Bohlin","Karl Benz","Enzo Ferrari"],a:1,w:"Nils Bohlin at Volvo, 1959."},
+  {q:"Who took the first long-distance car trip in 1888?",o:["Bertha Benz","Henry Ford","Ferdinand Porsche","Louis Chevrolet"],a:0,w:"Bertha Benz drove about 106 km."},
+  {q:"What did the Tata Nano's 2008 launch target price promise?",o:["50,000 rupees","1 lakh rupees","2 lakh rupees","3 lakh rupees"],a:1,w:"It was pitched as the world's cheapest car at 1 lakh rupees."}
+];
+const all = Object.values(FACTS).flat();
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => { const e = document.createElement(tag); if(cls) e.className = cls; if(html!=null) e.innerHTML = html; return e; };
+
+// hero video; if it cannot play, show the drawn animation instead
+
+// tabs + cards
+// one random fact at a time; no repeats until every fact has been seen
+const pool = Object.entries(FACTS).flatMap(([c,a]) => a.map(f => ({...f,c})));
+let bag = [], lastF = null;
+function draw(){
+  if(!bag.length){
+    bag = pool.slice();
+    for(let i=bag.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [bag[i],bag[j]]=[bag[j],bag[i]]; }
+    if(lastF && bag[bag.length-1]===lastF) bag.unshift(bag.pop());
+  }
+  lastF = bag.pop(); return lastF;
+}
+function show(){
+  const f = draw(), g = $("grid"); g.innerHTML = "";
+  const b = el("button","flip");
+  b.setAttribute("aria-label","Flip card: "+f.t);
+  b.innerHTML = '<div class="inner"><div class="face front"><span class="tag">'+f.c+'</span><div><h3>'+f.t+'</h3></div><small>'+f.k+' &middot; tap to flip</small></div><div class="face back"><p style="margin:0"><b>'+f.k+'.</b> '+f.d+'</p></div></div>';
+  b.onclick = () => b.classList.toggle("open");
+  g.appendChild(b);
+}
+$("shuffle").onclick = show; show();
+
+// car of the day (side-view illustrations drawn in SVG)
+const CARS = [
+ {n:"Ford Model T",y:"1908–1927",c:"#2B2D31",s:"Four-cylinder, about 20 hp",f:"Its price fell from $850 in 1908 to under $300 by the mid-1920s, and its assembly line put the world on wheels. The engine could also run on ethanol.",
+  p:[["M28 114 L34 94 L130 92 L134 70 L270 70 L272 92 L372 98 L376 114 Z","b"],["M140 70 L148 30 L232 30 L240 70 Z","b"],["M154 38 L226 38 L232 66 L148 66 Z","w"],["M140 25 H238 V32 H140 Z","d"]]},
+ {n:"Maruti 800",y:"1983–2014",c:"#C9CED6",s:"796 cc, 3-cylinder, front-engine",f:"India's first affordable people's car. Harpal Singh of Delhi received the very first one in December 1983, and it was based on the Suzuki Alto.",
+  p:[["M24 116 L24 80 L60 62 L135 54 L245 54 L290 80 L376 90 L378 116 Z","b"],["M72 66 L135 59 L240 59 L272 80 L66 80 Z","w"]]},
+ {n:"Tata Nano",y:"2008–2018",c:"#F2C230",s:"624 cc, 2-cylinder, rear-engine",f:"Tata promised a car for one lakh rupees. Its two-cylinder engine sits at the back, which gives the tiny body a surprisingly roomy cabin.",
+  p:[["M40 116 L40 70 L70 44 L240 44 L300 82 L350 92 L352 116 Z","b"],["M80 52 L236 52 L282 80 L74 80 Z","w"]]},
+ {n:"Lamborghini Countach",y:"1974–1990",c:"#D62E33",s:"V12, wedge shape, scissor doors",f:"The name is a Piedmontese exclamation of amazement. Its wedge shape and upward-opening doors defined what a supercar looked like for a generation.",
+  p:[["M22 116 L22 82 L60 68 L200 54 L300 78 L378 94 L380 116 Z","b"],["M172 61 L222 58 L268 76 L162 76 Z","w"]]},
+ {n:"Porsche 911",y:"1964–today",c:"#2F7F8F",s:"Rear-mounted flat-six",f:"Over 60 years on, the 911 still keeps its rear-engine layout and sloping roofline, which is rare in the car world.",
+  p:[["M24 116 L26 92 L70 76 L120 56 L200 50 L250 62 L320 84 L376 92 L378 116 Z","b"],["M130 62 L198 56 L240 67 L258 80 L122 80 Z","w"]]}
+];
+function carSVG(c){
+ const fill = {b:c.c,w:"#BFE3F0",d:"#222"};
+ const body = c.p.map(a => '<path d="'+a[0]+'" fill="'+fill[a[1]]+'" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>').join("");
+ const wheel = x => '<circle cx="'+x+'" cy="114" r="25" fill="#1B1D21"/><circle cx="'+x+'" cy="114" r="12" fill="#C9CDD3"/><circle cx="'+x+'" cy="114" r="4" fill="#5B606A"/>';
+ return '<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" style="color:var(--ink)"><ellipse cx="200" cy="139" rx="170" ry="6" fill="currentColor" opacity=".15"/>'+body+wheel(100)+wheel(305)+'<rect x="360" y="96" width="14" height="6" rx="2" fill="#FFF3B0"/></svg>';
+}
+let ci = Math.floor(Date.now()/864e5) % CARS.length;
+function showCar(){
+ const c = CARS[ci];
+ $("cimg").innerHTML = carSVG(c); $("cimg").setAttribute("aria-label", "Side view of the "+c.n);
+ $("cyr").textContent = c.y; $("cname").textContent = c.n; $("cfact").textContent = c.f; $("cspec").textContent = c.s;
+}
+$("cnext").onclick = () => { ci = (ci+1) % CARS.length; showCar(); };
+showCar();
+
+// quiz
+let qi = 0, score = 0;
+function renderQ(){
+  const box = $("quiz"); box.innerHTML = "";
+  if(qi >= QUIZ.length){
+    const msg = score>=5 ? "Proper gearhead." : score>=3 ? "Solid driver's seat knowledge." : "Time to flip a few more cards.";
+    box.innerHTML = '<div class="result">'+score+' / '+QUIZ.length+'</div><p>'+msg+'</p>';
+    const r = el("button","btn","Play again"); r.onclick = () => { qi=0; score=0; renderQ(); }; box.appendChild(r); return;
+  }
+  const Q = QUIZ[qi];
+  box.appendChild(el("div","qtop","<span>Question "+(qi+1)+" of "+QUIZ.length+"</span><span>Score "+score+"</span>"));
+  box.appendChild(el("h3",null,Q.q));
+  const opts = el("div","opts"); const why = el("p","why"); why.setAttribute("aria-live","polite");
+  Q.o.forEach((t,i) => {
+    const b = el("button","opt",t);
+    b.onclick = () => {
+      opts.querySelectorAll("button").forEach(x => x.disabled = true);
+      if(i===Q.a){ b.classList.add("good"); score++; why.textContent = "Correct. "+Q.w; }
+      else { b.classList.add("bad"); opts.children[Q.a].classList.add("good"); why.textContent = "Not quite. "+Q.w; }
+      const n = el("button","btn", qi===QUIZ.length-1 ? "See my score" : "Next question");
+      n.onclick = () => { qi++; renderQ(); }; box.appendChild(n); n.focus();
+    };
+    opts.appendChild(b);
+  });
+  box.appendChild(opts); box.appendChild(why);
+}
+renderQ();
+
+// theme toggle
+$("theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = getComputedStyle(r).colorScheme === "dark";
+  r.dataset.theme = dark ? "light" : "dark";
+};
+</script>
+</body>
+</html>
